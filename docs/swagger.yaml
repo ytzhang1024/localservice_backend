@@ -1,0 +1,31 @@
+info:
+  contact: {}
+  description: Localservice
+  title: Localservice
+  version: 0.0.1
+paths:
+  /api/v1/public/user/login:
+    post:
+      description: User Login
+      parameters:
+        - description: email
+          in: formData
+          name: email
+          required: true
+          type: string
+        - description: password
+          in: formData
+          name: password
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Login Successful
+          schema:
+            type: string
+        "401":
+          description: Login Failure
+          schema:
+            type: string
+      summary: User Login
+swagger: "2.0"
