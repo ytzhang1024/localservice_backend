@@ -5,7 +5,8 @@ server:
   port: 8090
 
 db:
-  dsn: root:sr990611@tcp(127.0.0.1:3306)/gorm?charset=utf8mb4&parseTime=True&loc=Local
+#  dsn: root:sr990611@tcp(127.0.0.1:3306)/gorm?charset=utf8mb4&parseTime=True&loc=Local
+  dsn: root:root@tcp(51.104.196.52:3306)/db?charset=utf8mb4&parseTime=True&loc=Local
   maxIdleConn: 10 # 最多空闲连接数
   maxOpenConn: 10 # 最多打开连接数
 
