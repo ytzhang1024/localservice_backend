@@ -39,10 +39,34 @@ func (m *ServiceService) GetServiceById(iCommonIDDTO *dto.CommonIDDTO) (model.Se
 	return m.Dao.GetServiceById(iCommonIDDTO.ID)
 }
 
+func (m *ServiceService) GetServiceByProviderId(iServiceListDTO *dto.ProviderServiceListDTO) ([]model.Service, int64, error) {
+	return m.Dao.GetServiceByProviderId(iServiceListDTO)
+}
+
 func (m *ServiceService) GetServiceList(iServiceListDTO *dto.ServiceListDTO) ([]model.Service, int64, error) {
 	return m.Dao.GetServiceList(iServiceListDTO)
 }
 
+func (m *ServiceService) GetApprovedServiceList(iServiceListDTO *dto.ServiceListDTO) ([]model.Service, int64, error) {
+	return m.Dao.GetApprovedServiceList(iServiceListDTO)
+}
+
 func (m *ServiceService) DeleteServiceById(iCommonIDDTO *dto.CommonIDDTO) error {
 	return m.Dao.DeleteServiceById(iCommonIDDTO.ID)
+}
+
+func (m *ServiceService) ApproveServiceById(iCommonIDDTO *dto.CommonIDDTO) error {
+	return m.Dao.ApproveServiceById(iCommonIDDTO.ID)
+}
+
+func (m *ServiceService) GetServiceListByCity(city string, iServiceListDTO *dto.ServiceListDTO) ([]model.Service, int64, error) {
+	return m.Dao.GetServiceListByCity(city, iServiceListDTO)
+}
+
+func (m *ServiceService) GetApprovedServiceListByCategory(category string, iServiceListDTO *dto.ServiceListDTO) ([]model.Service, int64, error) {
+	return m.Dao.GetApprovedServiceListByCategory(category, iServiceListDTO)
+}
+
+func (m *ServiceService) GetServiceListByCityAndCategory(city string, category string, iServiceListDTO *dto.ServiceListDTO) ([]model.Service, int64, error) {
+	return m.Dao.GetServiceListByCityAndCategory(city, category, iServiceListDTO)
 }

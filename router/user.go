@@ -10,7 +10,6 @@ func InitUserRoutes() {
 		userApi := api.NewUserApi()
 		rgPublicUser := rgPublic.Group("user").Use(func() gin.HandlerFunc {
 			return func(ctx *gin.Context) {
-
 			}
 		}())
 		{
@@ -21,9 +20,11 @@ func InitUserRoutes() {
 		rgAuthUser := rgAuth.Group("user")
 		{
 			rgAuthUser.POST("/list", userApi.GetUserList)
+			rgAuthUser.POST("/provider_list", userApi.GetProviderList)
 			rgAuthUser.GET("/:id", userApi.GetUserById)
 			rgAuthUser.PUT("/:id", userApi.UpdateUser)
 			rgAuthUser.DELETE("/:id", userApi.DeleteUserById)
+			rgAuthUser.PATCH("/approve/:id", userApi.ApproveServiceById)
 		}
 	})
 }

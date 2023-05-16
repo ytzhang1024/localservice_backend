@@ -29,11 +29,11 @@ func Start() {
 
 	// ===============================================================================
 	// = init redis connections
-	//rdClient, err := conf.InitRedis()
-	//global.RedisClient = rdClient
-	//if err != nil {
-	//	initErr = utils.AppendError(initErr, err)
-	//}
+	rdClient, err := conf.InitRedis()
+	global.RedisClient = rdClient
+	if err != nil {
+		initErr = utils.AppendError(initErr, err)
+	}
 
 	// ===============================================================================
 	// = error handling

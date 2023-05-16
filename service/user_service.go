@@ -80,3 +80,11 @@ func (m *UserService) UpdateUser(iUserUpdateDTO *dto.UserUpdateDTO) error {
 func (m *UserService) DeleteUserById(iCommonIDDTO *dto.CommonIDDTO) error {
 	return m.Dao.DeleteUserById(iCommonIDDTO.ID)
 }
+
+func (m *UserService) GetProviderList(iProviderListDTO *dto.UserListDTO) ([]model.User, int64, error) {
+	return m.Dao.GetProviderList(iProviderListDTO)
+}
+
+func (m *UserService) ApproveProviderById(iCommonIDDTO *dto.CommonIDDTO) error {
+	return m.Dao.ApproveProviderById(iCommonIDDTO.ID)
+}

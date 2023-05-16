@@ -15,6 +15,8 @@ type User struct {
 	Avatar   string `json:"avatar" gorm:"size:255"`
 	Mobile   string `json:"mobile" gorm:"size:11"`
 	Role     string `json:"role" form:"role" gorm:"size:128;not null"`
+	Status   string `json:"status" form:"status" gorm:"size:128;not null"`
+	Text     string `json:"text" form:"text" gorm:"size:128;not null"`
 }
 
 // ===============================================================================

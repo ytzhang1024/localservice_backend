@@ -85,3 +85,22 @@ func (m *UserDao) UpdateUser(iUserUpdateDTO *dto.UserUpdateDTO) error {
 func (m *UserDao) DeleteUserById(id uint) error {
 	return m.Orm.Delete(&model.User{}, id).Error
 }
+
+func (m *UserDao) GetProviderList(iUserListDTO *dto.UserListDTO) ([]model.User, int64, error) {
+	var giUserList []model.User
+	var nTotal int64
+
+	err := m.Orm.Model(&model.User{}).
+		Where("role = ?", "Provider").
+		Scopes(Paginate(iUserListDTO.Paginate)).
+		Find(&giUserList).
+		Offset(-1).Limit(-1).
+		Count(&nTotal).
+		Error
+
+	return giUserList, nTotal, err
+}
+
+func (m *UserDao) ApproveProviderById(id uint) error {
+	return m.Orm.Model(&model.User{}).Where("id = ?", id).Update("status", "Approved").Error
+}

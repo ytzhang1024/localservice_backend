@@ -4,7 +4,7 @@ import "gorm.io/gorm"
 
 type Service struct {
 	gorm.Model
-	UserId               uint   `json:"user_id" form:"user_id" gorm:"128;not null"`
+	UserId               int    `json:"user_id" form:"user_id" binding:"required" message:"user_id can not be empty"`
 	City                 string `json:"city" form:"city"`
 	Title                string `json:"title" form:"title" binding:"required" message:"title can not be empty"`
 	Description          string `json:"description" form:"description" binding:"required" message:"description can not be empty"`

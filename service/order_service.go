@@ -24,7 +24,7 @@ func NewOrderService() *OrderService {
 	return orderService
 }
 
-func (m *OrderService) AddOrder(iOrderAddDTO *dto.OrderAddDTO) error {
+func (m *OrderService) AddOrder(iOrderAddDTO *dto.OrderDTO) error {
 	return m.Dao.AddOrder(iOrderAddDTO)
 }
 
@@ -32,14 +32,26 @@ func (m *OrderService) GetOrderByUserId(iOrderDTO *dto.OrderDTO) ([]model.Order,
 	return m.Dao.GetOrderByUserId(iOrderDTO.CustomerId)
 }
 
+func (m *OrderService) GetOrderById(id uint) ([]model.Order, error) {
+	return m.Dao.GetOrderById(uint(id))
+}
+
 func (m *OrderService) GetOrderByServiceId(iOrderDTO *dto.OrderDTO) ([]model.Order, error) {
 	return m.Dao.GetOrderByServiceId(iOrderDTO.ServiceId)
 }
 
-func (m *OrderService) UpdateOrder(iOrderUpdateStateDTO *dto.OrderUpdateStateDTO) error {
-	if iOrderUpdateStateDTO.ID == 0 {
+func (m *OrderService) GetOrderByProviderId(iOrderDTO *dto.OrderDTO) ([]model.Order, error) {
+	return m.Dao.GetOrderByProviderId(iOrderDTO.ProviderId)
+}
+
+func (m *OrderService) UpdateOrder(iOrderDTO *dto.OrderUpdateStatusDTO) error {
+	if iOrderDTO.ID == 0 {
 		return errors.New("Invalid Order ID")
 	}
 
-	return m.Dao.UpdateOrder(iOrderUpdateStateDTO)
+	return m.Dao.UpdateOrder(iOrderDTO)
+}
+
+func (m *OrderService) UpdateOrderStatus(iCommonIDDTO *dto.CommonIDDTO, status string) error {
+	return m.Dao.UpdateOrderStatus(iCommonIDDTO.ID, status)
 }

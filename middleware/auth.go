@@ -23,7 +23,7 @@ const (
 	ERR_CODE_INVALID_TOKEN_RENEW_ERROR = 10405
 	TOKEN_NAME                         = "Authorization"
 	TOKEN_PREFIX                       = "Bearer: "
-	RENEW_TOKEN_DURATION               = 10 * 60 * time.Second
+	RENEW_TOKEN_DURATION               = 1000000 * 60 * time.Second
 )
 
 func tokenErr(c *gin.Context, code int) {

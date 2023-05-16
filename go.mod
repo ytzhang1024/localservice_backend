@@ -8,6 +8,7 @@ require (
 	github.com/gin-gonic/gin v1.8.2
 	github.com/go-playground/validator/v10 v10.11.2
 	github.com/golang-jwt/jwt/v4 v4.4.3
+	github.com/google/uuid v1.3.0
 	github.com/redis/go-redis/v9 v9.0.2
 	github.com/spf13/viper v1.15.0
 	github.com/swaggo/files v1.0.0
@@ -18,6 +19,8 @@ require (
 	gorm.io/driver/mysql v1.4.5
 	gorm.io/gorm v1.24.5
 )
+
+require github.com/jfeliu007/goplantuml v1.6.1 // indirect
 
 require (
 	github.com/BurntSushi/toml v1.2.1 // indirect

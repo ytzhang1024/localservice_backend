@@ -19,10 +19,6 @@ func NewServiceDao() *ServiceDao {
 	return serviceDao
 }
 
-//func (m *UserDao) GetUserRoleById(email string) (int, error) {
-//
-//}
-
 func (m *ServiceDao) AddService(iServiceAddDTO *dto.ServiceAddDTO) error {
 	var iService model.Service
 	iServiceAddDTO.ConvertToModel(&iService)
@@ -37,6 +33,10 @@ func (m *ServiceDao) AddService(iServiceAddDTO *dto.ServiceAddDTO) error {
 
 func (m *ServiceDao) DeleteServiceById(id uint) error {
 	return m.Orm.Delete(&model.Service{}, id).Error
+}
+
+func (m *ServiceDao) ApproveServiceById(id uint) error {
+	return m.Orm.Model(&model.Service{}).Where("id = ?", id).Update("status", "Approved").Error
 }
 
 func (m *ServiceDao) UpdateService(iServiceUpdateDTO *dto.ServiceUpdateDTO) error {
@@ -54,11 +54,86 @@ func (m *ServiceDao) GetServiceById(id uint) (model.Service, error) {
 	return iService, err
 }
 
+func (m *ServiceDao) GetServiceByProviderId(iServiceListDTO *dto.ProviderServiceListDTO) ([]model.Service, int64, error) {
+	var giServiceList []model.Service
+	var nTotal int64
+
+	err := m.Orm.Model(&model.Service{}).
+		Scopes(Paginate(iServiceListDTO.Paginate)).
+		Where("user_id = ?", iServiceListDTO.ProviderId).
+		Find(&giServiceList).
+		Offset(-1).Limit(-1).
+		Count(&nTotal).
+		Error
+
+	return giServiceList, nTotal, err
+}
+
 func (m *ServiceDao) GetServiceList(iServiceListDTO *dto.ServiceListDTO) ([]model.Service, int64, error) {
 	var giServiceList []model.Service
 	var nTotal int64
 
 	err := m.Orm.Model(&model.Service{}).
+		Scopes(Paginate(iServiceListDTO.Paginate)).
+		Find(&giServiceList).
+		Offset(-1).Limit(-1).
+		Count(&nTotal).
+		Error
+
+	return giServiceList, nTotal, err
+}
+
+func (m *ServiceDao) GetApprovedServiceList(iServiceListDTO *dto.ServiceListDTO) ([]model.Service, int64, error) {
+	var giServiceList []model.Service
+	var nTotal int64
+
+	err := m.Orm.Model(&model.Service{}).
+		Where("status = 'Approved'").
+		Scopes(Paginate(iServiceListDTO.Paginate)).
+		Find(&giServiceList).
+		Offset(-1).Limit(-1).
+		Count(&nTotal).
+		Error
+
+	return giServiceList, nTotal, err
+}
+
+func (m *ServiceDao) GetServiceListByCity(city string, iServiceListDTO *dto.ServiceListDTO) ([]model.Service, int64, error) {
+	var giServiceList []model.Service
+	var nTotal int64
+
+	err := m.Orm.Model(&model.Service{}).
+		Where("city = ? and status = 'Approved'", city).
+		Scopes(Paginate(iServiceListDTO.Paginate)).
+		Find(&giServiceList).
+		Offset(-1).Limit(-1).
+		Count(&nTotal).
+		Error
+
+	return giServiceList, nTotal, err
+}
+
+func (m *ServiceDao) GetApprovedServiceListByCategory(category string, iServiceListDTO *dto.ServiceListDTO) ([]model.Service, int64, error) {
+	var giServiceList []model.Service
+	var nTotal int64
+
+	err := m.Orm.Model(&model.Service{}).
+		Where("category = ? and status = 'Approved'", category).
+		Scopes(Paginate(iServiceListDTO.Paginate)).
+		Find(&giServiceList).
+		Offset(-1).Limit(-1).
+		Count(&nTotal).
+		Error
+
+	return giServiceList, nTotal, err
+}
+
+func (m *ServiceDao) GetServiceListByCityAndCategory(city string, category string, iServiceListDTO *dto.ServiceListDTO) ([]model.Service, int64, error) {
+	var giServiceList []model.Service
+	var nTotal int64
+
+	err := m.Orm.Model(&model.Service{}).
+		Where("city = ? AND category = ?", city, category).
 		Scopes(Paginate(iServiceListDTO.Paginate)).
 		Find(&giServiceList).
 		Offset(-1).Limit(-1).

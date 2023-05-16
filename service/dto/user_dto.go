@@ -18,6 +18,8 @@ type UserAddDTO struct {
 	Avatar   string `json:"avatar"`
 	Mobile   string `json:"mobile" form:"mobile"`
 	Role     string `json:"role" form:"role" binding:"required" message:"Role can not be empty"`
+	Status   string `json:"status" form:"status" gorm:"size:128;not null"`
+	Text     string `json:"text" form:"text" gorm:"size:128;not null"`
 }
 
 func (m *UserAddDTO) ConvertToModel(iUser *model.User) {
@@ -28,22 +30,26 @@ func (m *UserAddDTO) ConvertToModel(iUser *model.User) {
 	iUser.Email = m.Email
 	iUser.Password = m.Password
 	iUser.Role = m.Role
+	iUser.Text = m.Text
+	iUser.Status = m.Status
 }
 
 // ===============================================================================
 // = Update user DTO
 type UserUpdateDTO struct {
 	ID       uint   `json:"id" form:"id" uri:"id"`
-	Email    string `json:"email" form:"email"`
 	NickName string `json:"nick_name" form:"nick_name"`
 	Mobile   string `json:"mobile" form:"mobile"`
+	Text     string `json:"text" form:"text"`
+	Avatar   string
 }
 
 func (m *UserUpdateDTO) ConvertToModel(iUser *model.User) {
 	iUser.ID = m.ID
-	iUser.Email = m.Email
 	iUser.NickName = m.NickName
 	iUser.Mobile = m.Mobile
+	iUser.Avatar = m.Avatar
+	iUser.Text = m.Text
 }
 
 // ===============================================================================

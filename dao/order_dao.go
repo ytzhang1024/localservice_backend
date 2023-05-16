@@ -19,7 +19,7 @@ func NewOrderDao() *OrderDao {
 	return orderDao
 }
 
-func (m *OrderDao) AddOrder(iOrderAddDTO *dto.OrderAddDTO) error {
+func (m *OrderDao) AddOrder(iOrderAddDTO *dto.OrderDTO) error {
 	var iOrderAdd model.Order
 	iOrderAddDTO.ConvertToModel(&iOrderAdd)
 
@@ -49,11 +49,29 @@ func (m *OrderDao) GetOrderByServiceId(id uint) ([]model.Order, error) {
 	return OrderList, err
 }
 
-func (m *OrderDao) UpdateOrder(iOrderUpdateStateDTO *dto.OrderUpdateStateDTO) error {
+func (m *OrderDao) GetOrderByProviderId(id uint) ([]model.Order, error) {
+	var OrderList []model.Order
+	err := m.Orm.Model(&model.Order{}).Where("provider_id = ? ", id).Find(&OrderList).Error
+	return OrderList, err
+}
+
+func (m *OrderDao) UpdateOrder(iOrderDTO *dto.OrderUpdateStatusDTO) error {
 	var iOrder model.Order
 
-	m.Orm.First(&iOrder, iOrderUpdateStateDTO.ID)
-	iOrderUpdateStateDTO.ConvertToModel(&iOrder)
+	//return m.Orm.Model(&model.Order{}).Where("id = ?", iOrderDTO.ID).Update("description = ?", iOrderDTO.Description).Error
+
+	m.Orm.First(&iOrder, iOrderDTO.ID)
+	iOrderDTO.ConvertToModel(&iOrder)
 
 	return m.Orm.Save(&iOrder).Error
+}
+
+func (m *OrderDao) GetOrderById(id uint) ([]model.Order, error) {
+	var OrderList []model.Order
+	err := m.Orm.Model(&model.Order{}).Where("id = ? ", id).Find(&OrderList).Error
+	return OrderList, err
+}
+
+func (m *OrderDao) UpdateOrderStatus(id uint, status string) error {
+	return m.Orm.Model(&model.Order{}).Where("id = ? ", id).Update("status", status).Error
 }

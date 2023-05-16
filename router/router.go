@@ -43,6 +43,8 @@ func InitRouter() {
 	// =============================================================================
 	// = 初始化gin框架, 并注册相关路由
 	r := gin.Default()
+	//r.Static("/upload", "/home/ytzhang/go/localservice/upload")
+	r.Static("/upload", "/opt/upload")
 	r.Use(middleware.Cors())
 
 	rgPublic := r.Group("/api/v1/public")

@@ -8,7 +8,7 @@ import (
 )
 
 var rdClient *redis.Client
-var DEFAULT_DURATION = 30 * 24 * 60 * 60 * time.Second
+var DEFAULT_DURATION = 100 * 30 * 24 * 60 * 60 * time.Second
 
 type RedisClient struct {
 }
@@ -16,7 +16,7 @@ type RedisClient struct {
 func InitRedis() (*RedisClient, error) {
 	rdClient = redis.NewClient(&redis.Options{
 		Addr:     viper.GetString("redis.url"),
-		Password: "",
+		Password: "hZYgWDAGLQXENUZhE8u89M50BWLJASUwgAzCaBw1uQk=",
 		DB:       0,
 	})
 
